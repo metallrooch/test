@@ -1,0 +1,21 @@
+{% block tableschema %}
+	<div class="row">
+		<ul>
+			{% if not reserved %}
+				{% for table in tables %}
+					<a href="{% url 'reserve' table.id%}" ><li>{{ table }}</li></a>
+				{% endfor %}
+			{% else %}
+				{% for table in tables %}
+					{% for r in reserved %}
+						{% if table == r.table %}
+							<a href="" style="color: red;"><li>{{ table }} is reserved</li></a>
+						{% else %}
+							<a href="{% url 'reserve' table.id %}" ><li>{{ table }}</li></a>
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{%block tableschema%}{% endblock %}
+{% block form %}
+	<form method="POST"> {% csrf_token %}
+		<div class="form-group">
+			<label for="nameField">Name</label>
+			<input type="text" id="nameField" name="user_name" placeholder="Write your name" required>
+		</div>
+		<div class="form-group">
+			<label for="emailField">Email</label>
+			<input type="email" id="emailField" name="user_email" placeholder="Write your Email" required="">
+		</div>
+		<input type="submit" value="Reserve" class="btn btn-primary my-1">
+		</div>
+	</form>
+{% endblock %}

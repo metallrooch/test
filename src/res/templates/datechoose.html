@@ -1,0 +1,12 @@
+<form action="/" method="POST" class="form-inline"> {% csrf_token %}
+  <div>
+    <input type="date" id="party" name="party" value="{{ post_date }}" class="my-1 mr-2">
+  </div>
+  <div>
+    <input type="submit" value="Choose" class="btn btn-primary my-1">
+  </div>
+</form>
+
+<a href="{% url 'prev' %}">Prev</a>
+<a href="{% url 'today' %}">Today</a>
+<a href="{% url 'next' %}">Next</a>
