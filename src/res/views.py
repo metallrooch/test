@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import Table, Reserved, User
+# from .mail import yag
 import datetime
 
-post_date = None
+post_date = datetime.date.today()
 delta = datetime.timedelta(days=1)
 
 
@@ -34,6 +35,16 @@ def reserve_form(request, id):
 		
 		form = Reserved(table=table, date=str(post_date), is_reserved=True, user=user)
 		form.save()
+
+		# try:
+		# 	reserve_date = str(post_date)
+		# 	yag.send(
+		# 		to=user_email,
+		# 		subject='Book a table',
+		# 		contents=f'You reserved table on {reserve_date}'
+		# 	)
+		# except:
+		# 	pass
 		return redirect('home')
 		
 	tables = Table.objects.all()

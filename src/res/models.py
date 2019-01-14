@@ -2,15 +2,15 @@ from django.db import models
 
 class Table(models.Model):
 	TABLE_FORM = (
-		('OVAL', 'Oval'),
-		('SQUERE', 'Squere'),
+		('OVAL', 'oval'),
+		('SQUERE', 'squere'),
 	)
 	places = models.IntegerField(default=True)
 	shape = models.CharField(max_length=20, choices=TABLE_FORM, default=True)
-	#width = models.FloatField(blank=True, null=True)
-	#length = models.FloatField(blank=True, null=True)
-	#x = models.FloatField(blank=True, null=True)
-	#y = models.FloatField(blank=True, null=True)
+	width = models.IntegerField(blank=False, null=False, default=10)
+	length = models.IntegerField(blank=False, null=False, default=20)
+	x = models.IntegerField(blank=False, null=False, default=0)
+	y = models.IntegerField(blank=False, null=False, default=0)
 
 	def __str__(self):
 		return f'Table №{self.id}'

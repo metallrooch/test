@@ -4,16 +4,48 @@
 		"selected_items":
 		[
 			[
-				"user",
+				"def",
+				"default"
+			],
+			[
+				"text-a",
+				"text-align"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"ba",
+				"background"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"pre",
+				"prev_view"
+			],
+			[
+				"nam",
+				"nameField"
+			],
+			[
+				"u",
 				"user_email"
+			],
+			[
+				"user",
+				"user_name"
 			],
 			[
 				"us",
 				"user_name"
-			],
-			[
-				"re",
-				"required\tAttr"
 			],
 			[
 				"p",
@@ -196,20 +228,12 @@
 				"first_word"
 			],
 			[
-				"u",
-				"urlpatterns"
-			],
-			[
 				"BA",
 				"BASE_DIR"
 			],
 			[
 				"po",
 				"posts_delete"
-			],
-			[
-				"pos",
-				"posts"
 			],
 			[
 				"Post",
@@ -484,36 +508,12 @@
 				"border-style"
 			],
 			[
-				"bac",
-				"background-color"
-			],
-			[
 				"t",
 				"type\tAttr"
 			],
 			[
 				"f",
 				"form-group"
-			],
-			[
-				"te",
-				"text-decoration"
-			],
-			[
-				"pa",
-				"padding"
-			],
-			[
-				"use",
-				"user"
-			],
-			[
-				"met",
-				"meta\tTag"
-			],
-			[
-				"optio",
-				"options"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "res/templates/base.html",
 			"settings":
 			{
-				"buffer_size": 191,
+				"buffer_size": 1503,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -532,49 +532,21 @@
 			"file": "res/templates/tableschema.html",
 			"settings":
 			{
-				"buffer_size": 461,
+				"buffer_size": 997,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "res/templates/form.html",
+			"contents": "<!-- {% block tableschema %}\n\t<div class=\"row\">\n\t\t<ul>\n\t\t\t{% if not reserved %}\n\t\t\t\t{% for table in tables %}\n\t\t\t\t\t<a href=\"{% url 'reserve' table.id%}\" ><li>{{ table }}</li></a>\n\t\t\t\t{% endfor %}\n\t\t\t{% else %}\n\t\t\t\t{% for table in tables %}\n\t\t\t\t\t{% for r in reserved %}\n\t\t\t\t\t\t{% if table == r.table %}\n\t\t\t\t\t\t\t<a href=\"\" style=\"color: red;\"><li>{{ table }} is reserved</li></a>\n\t\t\t\t\t\t{% else %}\n\t\t\t\t\t\t\t<a href=\"{% url 'reserve' table.id %}\" ><li>{{ table }}</li></a>\n\t\t\t\t\t\t{% endif %}\n\t\t\t\t\t{% endfor %}\n\t\t\t\t{% endfor %}\n\t\t\t{% endif %}\n\t\t</ul>\n\t</div>\n{% endblock %} -->\n\nstyle=\"left: {{ table.x }}%; top: {{ table.y }}%;\"",
 			"settings":
 			{
-				"buffer_size": 326,
-				"encoding": "UTF-8",
+				"buffer_size": 619,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "res/templates/datechoose.html",
-			"settings":
-			{
-				"buffer_size": 461,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "restaurant/urls.py",
-			"settings":
-			{
-				"buffer_size": 889,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "restaurant/settings.py",
-			"settings":
-			{
-				"buffer_size": 3147,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "res/views.py",
+			"file": "res/models.py",
 			"settings":
 			{
 				"buffer_size": 1043,
@@ -583,13 +555,10 @@
 			}
 		},
 		{
-			"contents": "from django.db import models\n\nclass Table(models.Model):\n\tTABLE_FORM = (\n\t\t('OVAL', 'Oval'),\n\t\t('SQUERE', 'Squere'),\n\t)\n\t# name = models.CharField(max_length=40, default=True)\n\tplaces = models.IntegerField(default=True)\n\tshape = models.CharField(max_length=20, choices=TABLE_FORM, default=True)\n\t#width = models.FloatField(blank=True, null=True)\n\t#length = models.FloatField(blank=True, null=True)\n\t#x = models.FloatField(blank=True, null=True)\n\t#y = models.FloatField(blank=True, null=True)\n\n\tdef __str__(self):\n\t\treturn f'Table №{self.id}'\n\n\nclass User(models.Model):\n\tuser_name = models.CharField(max_length=50)\n\tuser_email = models.EmailField(max_length=50)\n\n\tdef __str__(self):\n\t\treturn self.user_name\n\n\nclass Reserved(models.Model):\n\ttable = models.ForeignKey(Table, on_delete=models.CASCADE)\n\tuser = models.ForeignKey(User, on_delete=models.CASCADE)\n\tis_reserved = models.BooleanField(default=False)\n\tdate = models.DateField(blank=True, null=True)\n\n\tdef __str__(self):\n\t\treturn f'{self.table} reserved for {self.user} at {self.date}'\n",
-			"file": "res/models.py",
-			"file_size": 1059,
-			"file_write_time": 131917856417158966,
+			"file": "res/static/res/style.css",
 			"settings":
 			{
-				"buffer_size": 1041,
+				"buffer_size": 242,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -660,16 +629,24 @@
 		"/home/oleksandr/Documents/test",
 		"/home/oleksandr/Documents/test/src",
 		"/home/oleksandr/Documents/test/src/res",
+		"/home/oleksandr/Documents/test/src/res/static",
+		"/home/oleksandr/Documents/test/src/res/static/res",
 		"/home/oleksandr/Documents/test/src/res/templates",
 		"/home/oleksandr/Documents/test/src/restaurant"
 	],
 	"file_history":
 	[
+		"/home/oleksandr/Documents/test/.gitignore",
+		"/home/oleksandr/Documents/test/src/.gitignore",
+		"/home/oleksandr/Documents/test/src/res/templates/tableschema.html",
+		"/home/oleksandr/Documents/test/src/res/templates/form.html",
+		"/home/oleksandr/Documents/test/src/res/templates/datechoose.html",
+		"/home/oleksandr/Documents/test/src/restaurant/urls.py",
+		"/home/oleksandr/Documents/test/src/restaurant/settings.py",
+		"/home/oleksandr/Documents/test/src/res/models.py",
+		"/home/oleksandr/Documents/test/src/res/views.py",
 		"/home/oleksandr/Documents/test/src/res/forms.py",
 		"/home/oleksandr/Documents/test/src/res/admin.py",
-		"/home/oleksandr/Documents/test/src/restaurant/urls.py",
-		"/home/oleksandr/Documents/test/src/res/templates/datechoose.html",
-		"/home/oleksandr/Documents/test/src/res/templates/tableschema.html",
 		"/home/oleksandr/Documents/test/src/res/templates/res/base.html",
 		"/home/oleksandr/Documents/python/trydjango/src/trydjango/urls.py",
 		"/home/oleksandr/Documents/python/trydjango/src/products/templates/products/base.html",
@@ -786,13 +763,7 @@
 		"/home/oleksandr/Документы/python/ideas/src/Procfile",
 		"/home/oleksandr/Документы/python/ideas/src/live-static/media-root/blank.txt",
 		"/home/oleksandr/Документы/python/django_stuff/the_weather/the_weather/settings.py",
-		"/home/oleksandr/Документы/python/django_stuff/the_weather/the_weather/urls.py",
-		"/home/oleksandr/Документы/python/django_stuff/the_weather/weather/urls.py",
-		"/home/oleksandr/Документы/python/django_stuff/the_weather/weather/views.py",
-		"/home/oleksandr/Документы/python/djangoproject/mysite/polls/urls.py",
-		"/home/oleksandr/Документы/python/djangoproject/mysite/polls/models.py",
-		"/home/oleksandr/Документы/python/djangoproject/mysite/polls/views.py",
-		"/home/oleksandr/Документы/python/djangoproject/mysite/polls/templates/polls/detail.html"
+		"/home/oleksandr/Документы/python/django_stuff/the_weather/the_weather/urls.py"
 	],
 	"find":
 	{
@@ -810,6 +781,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"relative",
+			"id"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -827,7 +800,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -836,43 +809,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 191,
+						"buffer_size": 1503,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								172,
-								172
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "res/templates/tableschema.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 461,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								453,
-								453
+								678,
+								678
 							]
 						],
 						"settings":
@@ -887,83 +832,54 @@
 					"type": "text"
 				},
 				{
+					"buffer": 1,
+					"file": "res/templates/tableschema.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 997,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								358,
+								358
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
 					"buffer": 2,
-					"file": "res/templates/form.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 326,
+						"buffer_size": 619,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								69,
-								69
+								619,
+								619
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "res/templates/datechoose.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 461,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								451,
-								451
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "restaurant/urls.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 889,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								31,
-								31
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -973,38 +889,8 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "restaurant/settings.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3147,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								432,
-								432
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 137.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "res/views.py",
+					"buffer": 3,
+					"file": "res/models.py",
 					"semi_transient": false,
 					"settings":
 					{
@@ -1015,47 +901,48 @@
 						"selection":
 						[
 							[
-								836,
-								836
+								571,
+								571
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 102.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "res/models.py",
+					"buffer": 4,
+					"file": "res/static/res/style.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1041,
+						"buffer_size": 242,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								858,
-								869
+								218,
+								218
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/CSS/CSS.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

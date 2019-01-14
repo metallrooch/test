@@ -1,0 +1,23 @@
+.box {
+	background: #f2f2f2;
+	width: 30%;
+	height: 300px;
+}
+
+.table {
+	position: relative;
+	background: #ccffdd;
+	text-align: center;
+}
+
+.reserved {
+	background: #ffad99;
+}
+
+.selected {
+	background: #ffffb3;
+}
+
+.oval {
+	border-radius: 10px;
+}

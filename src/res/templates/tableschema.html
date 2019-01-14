@@ -1,21 +1,32 @@
 {% block tableschema %}
 	<div class="row">
-		<ul>
+		<div class="box">
 			{% if not reserved %}
 				{% for table in tables %}
-					<a href="{% url 'reserve' table.id%}" ><li>{{ table }}</li></a>
+						<div class="table {{ table.shape|lower }}" style="left: {{ table.x }}%; top: {{ table.x }}%; height: : {{ table.width }}%; width: {{ table.length }}%;"><a href="{% url 'reserve' table.id %}">
+							<div class="{{ table.shape|lower }}">№{{ table.id }} - {{ table.places }}</div></a>
+						</div>
+					
 				{% endfor %}
 			{% else %}
 				{% for table in tables %}
 					{% for r in reserved %}
 						{% if table == r.table %}
-							<a href="" style="color: red;"><li>{{ table }} is reserved</li></a>
+							<a href="">
+								<div class="table {{ table.shape|lower }} reserved" style="left: {{ table.x }}%; top: {{ table.x }}%; height: : {{ table.width }}%; width: {{ table.length }}%;"><a href="{% url 'reserve' table.id %}">
+									№{{ table.id }} - {{ table.places }} buisy
+								</div>
+							</a>
 						{% else %}
-							<a href="{% url 'reserve' table.id %}" ><li>{{ table }}</li></a>
+							<a href="{% url 'reserve' table.id %}" >
+								<div class="table {{ table.shape|lower }}" style="left: {{ table.x }}%; top: {{ table.x }}%; height: : {{ table.width }}%; width: {{ table.length }}%;"><a href="{% url 'reserve' table.id %}">
+									№{{ table.id }} - {{ table.places }}
+								</div>
+							</a>
 						{% endif %}
 					{% endfor %}
 				{% endfor %}
 			{% endif %}
-		</ul>
+		</div>
 	</div>
 {% endblock %}
