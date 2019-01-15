@@ -8,14 +8,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	
-	{% load static %}
-	<link rel="stylesheet" href="{% static "res/style.css" %}">
+	<!-- {% load static %}
+	<link rel="stylesheet" href="{% static "res/style.css" %}"> -->
 
     <title>Hello, world!</title>
   </head>
   <body>
   	<div class="container">
     	{% include 'datechoose.html' %}
+	</div>
+	<hr>
+
+	<div class="container">
+    	{% include 'findtable.html' %}
 	</div>
 	<hr>
 

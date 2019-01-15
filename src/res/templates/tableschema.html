@@ -1,32 +1,17 @@
-{% block tableschema %}
-	<div class="row">
-		<div class="box">
-			{% if not reserved %}
-				{% for table in tables %}
-						<div class="table {{ table.shape|lower }}" style="left: {{ table.x }}%; top: {{ table.x }}%; height: : {{ table.width }}%; width: {{ table.length }}%;"><a href="{% url 'reserve' table.id %}">
-							<div class="{{ table.shape|lower }}">№{{ table.id }} - {{ table.places }}</div></a>
-						</div>
-					
-				{% endfor %}
-			{% else %}
-				{% for table in tables %}
-					{% for r in reserved %}
-						{% if table == r.table %}
-							<a href="">
-								<div class="table {{ table.shape|lower }} reserved" style="left: {{ table.x }}%; top: {{ table.x }}%; height: : {{ table.width }}%; width: {{ table.length }}%;"><a href="{% url 'reserve' table.id %}">
-									№{{ table.id }} - {{ table.places }} buisy
-								</div>
-							</a>
-						{% else %}
-							<a href="{% url 'reserve' table.id %}" >
-								<div class="table {{ table.shape|lower }}" style="left: {{ table.x }}%; top: {{ table.x }}%; height: : {{ table.width }}%; width: {{ table.length }}%;"><a href="{% url 'reserve' table.id %}">
-									№{{ table.id }} - {{ table.places }}
-								</div>
-							</a>
-						{% endif %}
-					{% endfor %}
-				{% endfor %}
-			{% endif %}
-		</div>
-	</div>
-{% endblock %}
+<p>tableschema {{ post_date }}</p>
+
+<ul>
+	{% for t in tables %}
+		{% if reserved.all.first %}
+			{% for r in reserved %}
+				{% if t|lower == r.table|lower %}
+					<li style="color:red">{{ t }} - {{ t.places }} - {{ t.shape }}</li>
+				{% else %}
+					<a href="{% url 'reserve' t.id %}"><li style="color:green">{{ t }} - {{ t.places }} - {{ t.shape }}</li></a>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<a href="{% url 'reserve' t.id %}"><li style="color:green">{{ t }} - {{ t.places }} - {{ t.shape }}</li></a>
+		{% endif %}
+	{% endfor %}
+</ul>

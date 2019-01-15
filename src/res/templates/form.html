@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
-{%block tableschema%}{% endblock %}
+{% block tableschema %}{% endblock %}
 {% block form %}
+	<p>You reserving {{ table.id }}</p>
 	<form method="POST"> {% csrf_token %}
 		<div class="form-group">
 			<label for="nameField">Name</label>

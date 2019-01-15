@@ -1,27 +1,39 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from .models import Table, Reserved, User
-# from .mail import yag
 import datetime
 
 post_date = datetime.date.today()
+check_table_date = str(datetime.date.today())
 delta = datetime.timedelta(days=1)
-
+idt = None
+table_for_check = None
 
 def home_view(request):
 	global post_date
+	global idt
+	global table_for_check
+	
 	today = datetime.date.today()
 	post_date = today if not post_date else post_date
 	if request.method == 'POST':
 		post_date = request.POST.get('party')
 		
 	tables = Table.objects.all()
-	reserved = Reserved.objects.filter(date=post_date)
-	context = {'tables': tables, 'reserved': reserved, 'post_date': str(post_date)}
+	reserved = Reserved.objects.filter(date=str(post_date))
+	context = {'tables': tables, 'reserved': reserved,
+			 	'post_date': str(post_date), 'idt': idt,
+			 	'check_table_date': str(check_table_date),
+			 	'table_for_check': table_for_check
+			}
 	return render(request, 'base.html', context)
 
 
 def reserve_form(request, id):
 	global post_date
+	global idt
+	global table_for_check
+
 	if request.method == "POST":
 		user_name = request.POST.get('user_name', None)
 		user_email = request.POST.get('user_email', None)
@@ -33,24 +45,42 @@ def reserve_form(request, id):
 
 		user = User.objects.filter(user_name=user_name).first()
 		
-		form = Reserved(table=table, date=str(post_date), is_reserved=True, user=user)
-		form.save()
-
-		# try:
-		# 	reserve_date = str(post_date)
-		# 	yag.send(
-		# 		to=user_email,
-		# 		subject='Book a table',
-		# 		contents=f'You reserved table on {reserve_date}'
-		# 	)
-		# except:
-		# 	pass
+		if not Reserved.objects.filter(date=post_date, table=table):
+			form = Reserved(table=table, date=str(post_date), is_reserved=True, user=user)
+			form.save()
+			send_mail(subject='Book a table', 
+					message=f'Table{table.id} booked for {user.user_name} on {form.date}', 
+					from_email='this-comp@somemail.com', recipient_list=[user.user_email],
+					fail_silently=False)
+		table_for_check = None
 		return redirect('home')
 		
 	tables = Table.objects.all()
 	reserved = Reserved.objects.filter(date=post_date)
-	context = {'tables': tables, 'reserved': reserved, 'post_date': str(post_date)}	
+	context = {'tables': tables, 'reserved': reserved, 
+					'post_date': str(post_date),
+					'check_table_date': check_table_date,
+					'table_for_check': table_for_check,
+					'idt': idt}	
 	return render(request, 'form.html', context)
+
+
+def check_table(request):
+	global idt
+	global check_table_date
+	global table_for_check
+
+	if request.method == 'POST':
+		print(request.POST)
+		table_id = request.POST.get('table_choice')
+		check_date = request.POST.get('check_date')
+		check_table_date = check_date
+		try:
+			table_for_check = Table.objects.filter(id=int(table_id)).first()
+			idt = Reserved.objects.filter(table=table_for_check, date=check_date).first()
+		except:
+			table_for_check = None
+		return redirect('home')
 
 
 def prev_view(request):
