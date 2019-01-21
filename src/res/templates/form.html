@@ -1,8 +1,4 @@
-{% extends 'base.html' %}
-
-{% block tableschema %}{% endblock %}
-{% block form %}
-	<p>You reserving {{ table.id }}</p>
+<p>You reserving {{ table.id }} on {{ post_date }}</p>
 	<form method="POST"> {% csrf_token %}
 		<div class="form-group">
 			<label for="nameField">Name</label>
@@ -15,4 +11,3 @@
 		<input type="submit" value="Reserve" class="btn btn-primary my-1">
 		</div>
 	</form>
-{% endblock %}

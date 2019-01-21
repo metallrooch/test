@@ -1,17 +1,60 @@
 <p>tableschema {{ post_date }}</p>
 
-<ul>
-	{% for t in tables %}
-		{% if reserved.all.first %}
-			{% for r in reserved %}
-				{% if t|lower == r.table|lower %}
-					<li style="color:red">{{ t }} - {{ t.places }} - {{ t.shape }}</li>
-				{% else %}
-					<a href="{% url 'reserve' t.id %}"><li style="color:green">{{ t }} - {{ t.places }} - {{ t.shape }}</li></a>
-				{% endif %}
-			{% endfor %}
+<!-- <ul>
+	{% for k, v in tables_dict.items %}
+		{% if v.reserved.is_reserved %}
+		<li style="color: red;">{{ k }}  {{ v.table.shape }} {{ v.reserved.is_reserved }}</li>
 		{% else %}
-			<a href="{% url 'reserve' t.id %}"><li style="color:green">{{ t }} - {{ t.places }} - {{ t.shape }}</li></a>
+		<a href="{% url 'reserve' v.table.id %}"><li style="color: green;">{{ k }}  {{ v.table.shape }} {{ v.reserved }}</li></a>
 		{% endif %}
 	{% endfor %}
-</ul>
+</ul> -->
+
+<!-- <svg width="500" height="500">
+	{% for k, v in tables_dict.items %}
+		{% if v.reserved.is_reserved %}
+			{% if v.table.shape|lower == 'oval' %}
+				<g class="one">
+					<text x="{{ v.table.x }}" y="{{ v.table.y }}">{{ k }} {{ v.table.places }} </text>
+					<rect x="{{ v.table.x }}%" y="{{ v.table.y }}%" width="{{ v.table.length }}%" height="{{ v.table.width }}%" fill="red" rx="20", ry="20" />
+					
+				</g>
+			{% else %}
+				<g class="one">
+					<rect x="{{ v.table.x }}%" y="{{ v.table.y }}%" width="{{ v.table.length }}%" height="{{ v.table.width }}%" fill="red" />
+					<text x="{{ v.table.x }}%" y="{{ v.table.y }}%" >{{ k }} {{ v.table.places }} </text>
+				</g>
+			{% endif %}
+		{% else %}
+			{% if v.table.shape|lower == 'oval' %}
+				<g class="one">
+					<a href="{% url 'reserve' v.table.id %}"> 
+						<rect x="{{ v.table.x }}%" y="{{ v.table.y }}%" width="{{ v.table.length }}%" height="{{ v.table.width }}%" fill="green" rx="20" ry="20" />
+					</a>
+				</g>
+			{% else %}
+				<g class="one">
+					<a href="{% url 'reserve' v.table.id %}"> 
+						<rect x="{{ v.table.x }}%" y="{{ v.table.y }}%" width="{{ v.table.length }}%" height="{{ v.table.width }}%" fill="green" />
+					</a>
+				</g>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+
+</svg> -->
+<svg id='graphic' width="400" height="300">
+	<style>
+    /* <![CDATA[ */
+    svg {
+    	background: #f2f2f2;
+    }
+    .notReservedTable {
+      fill: #8AE36D;
+    }
+    .reservedTable {
+    	fill: #F0855D;
+    }
+    /* ]]> */
+  </style>
+</svg>

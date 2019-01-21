@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from res.views import home_view, reserve_form,prev_view, today_view, next_view, check_table
+from res.views import (home_view, reserve_form,prev_view, today_view, 
+                            next_view, check_table, get_tables
+                    )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +27,6 @@ urlpatterns = [
     path('prev/', prev_view, name='prev'),
     path('today/', today_view, name='today'),
     path('next/', next_view, name='next'),
-    path('check/', check_table, name='check')
+    path('check/', check_table, name='check'),
+    path('get_tables/', get_tables, name='get_tables'),
 ]
